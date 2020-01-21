@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       s: 'data'
     }
   },
   methods: {
-    aaa () {}
+    aaa() {}
   }
 }
 </script>

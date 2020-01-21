@@ -41,7 +41,7 @@
 import { loginReq } from '../../assets/api/index'
 import rotuer from '../../router/index'
 export default {
-  data () {
+  data() {
     var reg = new RegExp(
       '^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$'
     )
@@ -58,8 +58,8 @@ export default {
     return {
       labelPosition: 'right',
       ruleForm: {
-        email: 'itheima@itcast.cn',
-        password: '123456'
+        email: 'maozi@qq.com',
+        password: 'a123456'
       },
       rules: {
         email: [{ validator: validatePass, trigger: 'blur' }],
@@ -71,20 +71,29 @@ export default {
     }
   },
   methods: {
-    reset_click: function () {
+    reset_click: function() {
       // 清空表单字段
       this.$refs.ruleForm.resetFields()
     },
-    login_click: function () {
+    login_click: function() {
       // 判断验证合不合法
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           const { data: res } = await loginReq(this.ruleForm)
           // 通过状态码判断是否登录成功
+          if (res.status === 0) {
+            this.$message.error('该账号已被禁用,请和管理员联系')
+            return
+          }
           if (res.meta !== 400) {
-            // window.sessionStorage.setItem('token', res.data.token)
-            this.$message.success('登录成功')
-            rotuer.push('/home')
+            if (res.role !== 'normal') {
+              this.$message.success('登录成功')
+              sessionStorage.setItem('role', res.role)
+              rotuer.push('/home')
+            } else {
+              this.$message.success('登录成功')
+              rotuer.push('/user_home')
+            }
           } else {
             this.$message.error('用户名或者密码不正确')
           }
@@ -94,10 +103,11 @@ export default {
         }
       })
     },
-    register: function () {
+    register: function() {
       this.$router.push({ path: 'register' })
     }
-  }
+  },
+  created() {}
 }
 </script>
 <style scoped>

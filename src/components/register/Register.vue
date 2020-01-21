@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import rotuer from '../../router/index'
+import router from '../../router/index'
 import { registerReq } from '../../assets/api/index'
 export default {
   data () {
@@ -119,10 +119,10 @@ export default {
       this.$refs.form.validate(async valid => {
         if (valid) {
           const { data: res } = await registerReq(this.form)
-          // 通过状态码判断是否登录成功
+          // 通过状态码判断是否注册成功
           if (res.meta !== 400) {
             this.$message.success('注册成功')
-            rotuer.push('/login')
+            router.push('/login')
           } else {
             this.$message.error('邮箱已存在')
           }
