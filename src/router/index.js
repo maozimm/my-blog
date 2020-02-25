@@ -11,6 +11,7 @@ import SetComment from '../components/Comment/SetComment.vue'
 import CategoryList from '../components/Categories/CategoryList.vue'
 import UserHome from '../components/UserHome/UserHome.vue'
 import HotArticle from '../components/HotArticle/HotArticle.vue'
+import ArticleDetail from '../components/Article/ArticleDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -30,10 +31,12 @@ const routes = [
       { path: '/userInfo', component: UserInfo },
       { path: '/articleList', component: ArticleList },
       { path: '/publishArticle', component: PublishArticle },
+      { path: '/modifyArticle/:id', component: PublishArticle },
       { path: '/commentList', component: CommentList },
       { path: '/setComment', component: SetComment },
       { path: '/categoryList', component: CategoryList }
-    ]
+    ],
+    redirect: '/userInfo'
   },
   {
     path: '/register',
@@ -42,7 +45,11 @@ const routes = [
   {
     path: '/user_home',
     component: UserHome,
-    children: [{ path: '/hotArticle', component: HotArticle }],
+    children: [
+      { path: '/hotArticle', component: HotArticle },
+      { path: '/articleDetail/:id', component: ArticleDetail },
+      { path: '/userPublishArticle', component: PublishArticle }
+    ],
     redirect: '/hotArticle'
   }
 ]

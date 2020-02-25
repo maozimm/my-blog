@@ -26,30 +26,30 @@
               <i class="el-icon-location"></i>
               <span>用户管理</span>
             </template>
-            <el-menu-item index="userInfo">用户列表</el-menu-item>
+            <el-menu-item index="/userInfo">用户列表</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-star-off"></i>
               <span>文章管理</span>
             </template>
-            <el-menu-item index="articleList">文章列表</el-menu-item>
-            <el-menu-item index="publishArticle">发布文章</el-menu-item>
+            <el-menu-item index="/articleList">文章列表</el-menu-item>
+            <el-menu-item index="/publishArticle">发布文章</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-star-off"></i>
               <span>分类管理</span>
             </template>
-            <el-menu-item index="categoryList">分类列表</el-menu-item>
+            <el-menu-item index="/categoryList">分类列表</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
             <template slot="title">
               <i class="el-icon-star-off"></i>
               <span>评论管理</span>
             </template>
-            <el-menu-item index="commentList">评论列表</el-menu-item>
-            <el-menu-item index="setComment">评论设置</el-menu-item>
+            <el-menu-item index="/commentList">评论列表</el-menu-item>
+            <el-menu-item index="/setComment">评论设置</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -71,6 +71,7 @@ export default {
       router.push('/login')
       this.$message.success('退出成功')
       sessionStorage.removeItem('role')
+      sessionStorage.removeItem('userId')
     },
     handleOpen(key, keyPath) {},
     handleClose(key, keyPath) {}
@@ -81,9 +82,9 @@ export default {
 .container {
   height: 100%;
 }
-.container .el-header {
-  /* padding: 0 50px; */
-}
+/* .container .el-header { */
+/* padding: 0 50px; */
+/* } */
 .container .header {
   background-color: #333;
 }
@@ -121,5 +122,8 @@ export default {
 }
 .el-submenu {
   width: 200px;
+}
+.asdie_main .el-main {
+  overflow: hidden;
 }
 </style>

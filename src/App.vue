@@ -13,6 +13,16 @@ export default {
   },
   methods: {
     aaa() {}
+  },
+  watch: {
+    $route(to, from) {
+      if (
+        to.fullPath === '/publishArticle' &&
+        from.fullPath.split('/')[1] === 'modifyArticle'
+      ) {
+        location.reload()
+      }
+    }
   }
 }
 </script>

@@ -28,8 +28,38 @@ const addUserReq = function(data) {
 const getCategoriesReq = function() {
   return axios.get('/category')
 }
-const getArticleReq = function() {
-  return axios.get('/article')
+const getArticleReq = function(category, state, page, size) {
+  return axios.get('/article', {
+    params: {
+      category: category,
+      state: state,
+      pageNum: page,
+      pageSize: size
+    }
+  })
+}
+const addArticleReq = function(params) {
+  return axios.post('/addArticle', params)
+}
+const getHotArticleReq = function(pageNum, pageSize) {
+  return axios.get('/getHotArticle', {
+    params: {
+      pageNum,
+      pageSize
+    }
+  })
+}
+const findArticleReq = function(id) {
+  return axios.get('/findArticle/' + id)
+}
+const modifyArticleReq = function(id, params) {
+  return axios.put('/modifyArticle/' + id, params)
+}
+const deleteArticleReq = function(id) {
+  return axios.delete('/deleteArticle/' + id)
+}
+const modifyIsHotReq = function(id, isHot) {
+  return axios.put('/modifyIsHot/' + id, isHot)
 }
 export {
   loginReq,
@@ -39,5 +69,11 @@ export {
   deleteUserReq,
   addUserReq,
   getCategoriesReq,
-  getArticleReq
+  getArticleReq,
+  addArticleReq,
+  getHotArticleReq,
+  findArticleReq,
+  modifyArticleReq,
+  deleteArticleReq,
+  modifyIsHotReq
 }

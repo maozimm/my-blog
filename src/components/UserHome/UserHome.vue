@@ -20,50 +20,50 @@
             <i class="el-icon-location"></i>
             <span>首页</span>
           </template>
-          <el-menu-item index="hotArticle">热门文章</el-menu-item>
+          <el-menu-item index="/hotArticle">热门文章</el-menu-item>
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>文章</span>
           </template>
-          <el-menu-item index="userInfo">推荐文章</el-menu-item>
+          <el-menu-item index="/userInfo">推荐文章</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>发布文章</span>
           </template>
-          <el-menu-item index="userInfo">写文章</el-menu-item>
+          <el-menu-item index="/userPublishArticle">写文章</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>文章管理</span>
           </template>
-          <el-menu-item index="userInfo">文章列表</el-menu-item>
+          <el-menu-item index="/userInfo">文章列表</el-menu-item>
         </el-submenu>
         <el-submenu index="5">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>留言</span>
           </template>
-          <el-menu-item index="userInfo">发布留言</el-menu-item>
+          <el-menu-item index="/userInfo">发布留言</el-menu-item>
         </el-submenu>
         <el-submenu index="6">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>个人中心</span>
           </template>
-          <el-menu-item index="userInfo">修改资料</el-menu-item>
-          <el-menu-item index="userInfo">修改密码</el-menu-item>
+          <el-menu-item index="/userInfo">修改资料</el-menu-item>
+          <el-menu-item index="/userInfo">修改密码</el-menu-item>
         </el-submenu>
         <el-submenu index="7">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>关于</span>
           </template>
-          <el-menu-item index="userInfo">网站信息</el-menu-item>
+          <el-menu-item index="/userInfo">网站信息</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>
