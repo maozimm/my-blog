@@ -86,10 +86,10 @@ export default {
             return
           }
           if (res.meta !== 400) {
+            sessionStorage.setItem('userId', res._id)
             if (res.role !== 'normal') {
               this.$message.success('登录成功')
               sessionStorage.setItem('role', res.role)
-              sessionStorage.setItem('userId', res._id)
               rotuer.push('/home')
             } else {
               this.$message.success('登录成功')

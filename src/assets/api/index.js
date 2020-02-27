@@ -61,6 +61,30 @@ const deleteArticleReq = function(id) {
 const modifyIsHotReq = function(id, isHot) {
   return axios.put('/modifyIsHot/' + id, isHot)
 }
+const addViewsReq = function(params) {
+  return axios.post('/addViews', params)
+}
+const getCommentReq = function(id, page) {
+  return axios.get('/getComment', {
+    params: {
+      id,
+      page
+    }
+  })
+}
+const getReplyReq = function(id) {
+  return axios.get('/getReply', {
+    params: {
+      id
+    }
+  })
+}
+const addReplyReq = function(params) {
+  return axios.post('/addReply', params)
+}
+const addCommetReq = function(params) {
+  return axios.post('/addComment', params)
+}
 export {
   loginReq,
   registerReq,
@@ -75,5 +99,10 @@ export {
   findArticleReq,
   modifyArticleReq,
   deleteArticleReq,
-  modifyIsHotReq
+  modifyIsHotReq,
+  addViewsReq,
+  getCommentReq,
+  getReplyReq,
+  addReplyReq,
+  addCommetReq
 }
