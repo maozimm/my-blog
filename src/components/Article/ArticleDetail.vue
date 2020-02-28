@@ -36,7 +36,7 @@
           <p>{{ articleDetail.content }}</p>
         </div>
         <div class="writeCommet">
-          <img :src="null" alt="" class="avatar-32" />
+          <img :src="avatar" alt="" class="avatar-32" />
           <el-input
             class="width90"
             type="textarea"
@@ -98,7 +98,8 @@ import {
   getCommentReq,
   getReplyReq,
   addReplyReq,
-  addCommetReq
+  addCommetReq,
+  findUserReq
 } from '../../assets/api/index'
 export default {
   data() {
@@ -113,11 +114,14 @@ export default {
       replys: {},
       current_page: 1,
       total: 0,
-      textArea: ''
+      textArea: '',
+      avatar: ''
     }
   },
   methods: {
     async getRrticleDetail() {
+      const avatar = await findUserReq(sessionStorage.getItem('userId'))
+      this.avatar = avatar.data.user[0].avatar
       // 找到文章
       const res = await findArticleReq(this.$route.params.id)
       this.articleDetail = res.data.article[0]
@@ -149,6 +153,14 @@ export default {
       if (res.data.meta === 200) {
         this.$message.success('回复成功')
         this.getComments(this.id, this.current_page)
+        this.articleDetail.meta.comments++
+        await modifyArticleReq(this.$route.params.id, {
+          meta: {
+            views: this.views,
+            likes: this.articleDetail.meta.likes,
+            comments: this.articleDetail.meta.comments
+          }
+        })
       }
     },
     // 取消评论
@@ -209,6 +221,14 @@ export default {
         this.textArea = ''
         this.$message.success('评论成功')
         this.getComments(this.id, this.current_page)
+        this.articleDetail.meta.comments++
+        await modifyArticleReq(this.$route.params.id, {
+          meta: {
+            views: this.views,
+            likes: this.articleDetail.meta.likes,
+            comments: this.articleDetail.meta.comments
+          }
+        })
       }
     },
     addCommetCancel() {

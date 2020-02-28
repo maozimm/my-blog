@@ -1,7 +1,19 @@
 <template>
   <div class="hotArticle">
     <div>
-      <h1>{{ title }}</h1>
+      <h1>分类文章</h1>
+    </div>
+    <div class="search">
+      <el-select v-model="category" placeholder="所有分类" size="mini">
+        <el-option
+          v-for="item in categoryOptions"
+          :key="item._id"
+          :label="item.title"
+          :value="item._id"
+        >
+        </el-option>
+      </el-select>
+      <el-button size="mini" @click="search">筛选</el-button>
     </div>
     <div class="articleList" v-for="(item, index) in articleList" :key="index">
       <div class="thumbnail">
@@ -29,7 +41,7 @@
       </div>
     </div>
     <!-- 分页 -->
-    <div class="block paginations" v-if="!recommendFlag">
+    <div class="block paginations">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="current_page"
@@ -42,7 +54,10 @@
 </template>
 
 <script>
-import { getHotArticleReq, getRecommendReq } from '../../assets/api/index'
+import {
+  getCategoriesReq,
+  getCategoriesArticleReq
+} from '../../assets/api/index'
 import router from '../../router'
 export default {
   data() {
@@ -50,38 +65,34 @@ export default {
       total: null,
       articleList: [],
       current_page: 1,
-      // 推荐文章标识符
-      recommendFlag: false,
-      title: '热门文章'
+      categoryOptions: [],
+      category: ''
     }
   },
   methods: {
-    async getHotArticle(pageNum) {
-      const data = await getHotArticleReq(pageNum)
-      this.articleList = data.data.article
-      this.total = data.data.total
-    },
-    async getRecommendArticle() {
-      const data = await getRecommendReq()
-      this.articleList = data.data.article
-    },
+    async getHotArticle(pageNum) {},
     // 分页的页数改变
     handleCurrentChange(val) {
-      this.getHotArticle(val)
+      this.getCategoryArticle(this.category, val)
     },
     // 跳转详情页
     toArticleDetail(id) {
       router.push('/articleDetail/' + id)
+    },
+    async getCategoryArticle(category, pageNum) {
+      const data = await getCategoriesArticleReq(category, pageNum)
+      this.articleList = data.data.article
+      this.total = data.data.total
+    },
+    search() {
+      this.getCategoryArticle(this.category, this.current_page)
     }
   },
   async created() {
-    if (this.$route.name === 'recommendArticle') {
-      this.recommendFlag = true
-      this.title = '推荐文章'
-      this.getRecommendArticle()
-    } else {
-      this.getHotArticle(this.current_page)
-    }
+    const res = await getCategoriesReq()
+    this.categoryOptions = res.data.category
+    this.categoryOptions.unshift({ _id: '', title: '所有分类' })
+    this.getCategoryArticle(this.category, this.current_page)
   }
 }
 </script>
@@ -139,5 +150,12 @@ export default {
   position: absolute;
   top: 20px;
   right: 300px;
+}
+.search {
+  margin-top: 10px;
+}
+.search .el-select {
+  width: 100px;
+  margin-right: 10px;
 }
 </style>

@@ -32,11 +32,11 @@
       </el-row>
       <el-table :data="tableData" stripe style="width: 100%" border>
         <el-table-column type="index" width="50"></el-table-column>
-        <el-table-column
-          prop="avatar"
-          label="头像"
-          width="180"
-        ></el-table-column>
+        <el-table-column prop="avatar" label="头像" width="180">
+          <template scope="scope">
+            <img :src="scope.row.avatar" alt="" width="80px" height="80px" />
+          </template>
+        </el-table-column>
         <el-table-column
           prop="nickName"
           label="昵称"
@@ -379,5 +379,8 @@ export default {
 }
 .paginations {
   margin-top: 20px;
+}
+img {
+  margin-left: 40px;
 }
 </style>

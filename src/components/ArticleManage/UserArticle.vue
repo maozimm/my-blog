@@ -1,8 +1,9 @@
 <template>
   <div class="hotArticle">
     <div>
-      <h1>{{ title }}</h1>
+      <h1>文章列表</h1>
     </div>
+    <span v-if="articleList.length === 0">你还没有发表任何文章</span>
     <div class="articleList" v-for="(item, index) in articleList" :key="index">
       <div class="thumbnail">
         <img :src="item.thumbnail" alt="" width="100px" height="100px" />
@@ -15,6 +16,18 @@
         <a href="javascript:void(0)" @click="toArticleDetail(item._id)"
           >阅读更多>>></a
         >
+        <a
+          href="javascript:void(0)"
+          @click="toModifyArticle(item._id)"
+          style="margin-left:20px"
+          >修改文章>>></a
+        >
+        <a
+          href="javascript:void(0)"
+          @click="deleteArticle(item._id)"
+          style="margin-left:20px"
+          >删除文章>>></a
+        >
       </div>
       <div class="right">
         <div class="author">作者: {{ item.author.nickName }}</div>
@@ -25,11 +38,12 @@
           <span>点赞数: {{ item.meta.likes }}</span>
           <span>评论数: {{ item.meta.comments }}</span>
           <span>浏览数: {{ item.meta.views }}</span>
+          <span>状态: {{ item.state === 1 ? '发布' : '草稿' }}</span>
         </div>
       </div>
     </div>
     <!-- 分页 -->
-    <div class="block paginations" v-if="!recommendFlag">
+    <div class="block paginations">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="current_page"
@@ -42,46 +56,59 @@
 </template>
 
 <script>
-import { getHotArticleReq, getRecommendReq } from '../../assets/api/index'
+import { getUserArticleReq, deleteArticleReq } from '../../assets/api/index'
 import router from '../../router'
 export default {
   data() {
     return {
       total: null,
       articleList: [],
-      current_page: 1,
-      // 推荐文章标识符
-      recommendFlag: false,
-      title: '热门文章'
+      current_page: 1
     }
   },
   methods: {
-    async getHotArticle(pageNum) {
-      const data = await getHotArticleReq(pageNum)
-      this.articleList = data.data.article
-      this.total = data.data.total
-    },
-    async getRecommendArticle() {
-      const data = await getRecommendReq()
-      this.articleList = data.data.article
-    },
+    async getHotArticle(pageNum) {},
     // 分页的页数改变
     handleCurrentChange(val) {
-      this.getHotArticle(val)
+      this.getUserArticle(sessionStorage.getItem('userId'), val)
     },
     // 跳转详情页
     toArticleDetail(id) {
       router.push('/articleDetail/' + id)
+    },
+    // 跳转修改文章
+    toModifyArticle(id) {
+      router.push('/userModifyArticle/' + id)
+    },
+    // 删除文章
+    async deleteArticle(id) {
+      const result = await this.$confirm(
+        '此操作将永久删除该文章, 是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).catch(err => {
+        return err
+      })
+      if (result === 'confirm') {
+        await deleteArticleReq(id)
+        this.$message.success('删除文章成功')
+        this.getUserArticle(sessionStorage.getItem('userId'), this.current_page)
+      } else {
+        this.$message.info('已取消删除')
+      }
+    },
+    async getUserArticle(userId, pageNum) {
+      const res = await getUserArticleReq(userId, pageNum)
+      this.total = res.data.total
+      this.articleList = res.data.article
     }
   },
   async created() {
-    if (this.$route.name === 'recommendArticle') {
-      this.recommendFlag = true
-      this.title = '推荐文章'
-      this.getRecommendArticle()
-    } else {
-      this.getHotArticle(this.current_page)
-    }
+    this.getUserArticle(sessionStorage.getItem('userId'), this.current_page)
   }
 }
 </script>
@@ -138,6 +165,6 @@ export default {
 .thumbnail {
   position: absolute;
   top: 20px;
-  right: 300px;
+  right: 350px;
 }
 </style>

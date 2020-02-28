@@ -2,8 +2,10 @@
   <el-container class="container">
     <el-aside>
       <div class="userInfo">
-        <img src="../../assets/logo.png" alt="" />
-        <div class="nickName"><span>测试用户</span></div>
+        <img :src="info.avatar" alt="" />
+        <div class="nickName">
+          <span>{{ info.nickName }}</span>
+        </div>
       </div>
       <el-menu
         background-color="#545c64"
@@ -27,7 +29,8 @@
             <i class="el-icon-location"></i>
             <span>文章</span>
           </template>
-          <el-menu-item index="/userInfo">推荐文章</el-menu-item>
+          <el-menu-item index="/recommendArticle">推荐文章</el-menu-item>
+          <el-menu-item index="/articleCategories">分类文章</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">
@@ -41,7 +44,7 @@
             <i class="el-icon-location"></i>
             <span>文章管理</span>
           </template>
-          <el-menu-item index="/userInfo">文章列表</el-menu-item>
+          <el-menu-item index="/userArticle">文章列表</el-menu-item>
         </el-submenu>
         <el-submenu index="5">
           <template slot="title">
@@ -55,7 +58,7 @@
             <i class="el-icon-location"></i>
             <span>个人中心</span>
           </template>
-          <el-menu-item index="/userInfo">修改资料</el-menu-item>
+          <el-menu-item index="/modifyUser">修改资料</el-menu-item>
           <el-menu-item index="/userInfo">修改密码</el-menu-item>
         </el-submenu>
         <el-submenu index="7">
@@ -72,15 +75,21 @@
 </template>
 
 <script>
+import { findUserReq } from '../../assets/api/index'
 export default {
   data() {
-    return {}
+    return {
+      info: {}
+    }
   },
   methods: {
     handleOpen(key, keyPath) {},
     handleClose(key, keyPath) {}
   },
-  created() {}
+  async created() {
+    const res = await findUserReq(sessionStorage.getItem('userId'))
+    this.info = res.data.user[0]
+  }
 }
 </script>
 <style scoped>
@@ -100,7 +109,7 @@ export default {
 }
 .userInfo img {
   width: 100px;
-  height: auto;
+  height: 100px;
   margin-left: 50px;
   border-radius: 50%;
   background-color: #fff;

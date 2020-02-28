@@ -36,7 +36,11 @@
         <el-table-column type="index" width="50"></el-table-column>
         <el-table-column prop="thumbnail" label="缩略图" width="180">
           <template scope="scope">
-            <img :src="scope.row.thumbnail" alt="" style="width:80px;" />
+            <img
+              :src="scope.row.thumbnail"
+              alt=""
+              style="width:80px;height:80px;margin-left:40px;"
+            />
           </template>
         </el-table-column>
         <el-table-column

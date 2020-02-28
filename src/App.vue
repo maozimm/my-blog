@@ -22,6 +22,19 @@ export default {
       ) {
         location.reload()
       }
+      if (
+        (to.fullPath === '/hotArticle' &&
+          from.fullPath === '/recommendArticle') ||
+        (to.fullPath === '/recommendArticle' && from.fullPath === '/hotArticle')
+      ) {
+        location.reload()
+      }
+      if (
+        to.name === 'userPublishArticle' &&
+        from.name === 'userModifyArticle'
+      ) {
+        location.reload()
+      }
     }
   }
 }

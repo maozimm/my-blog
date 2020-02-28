@@ -12,6 +12,9 @@ import CategoryList from '../components/Categories/CategoryList.vue'
 import UserHome from '../components/UserHome/UserHome.vue'
 import HotArticle from '../components/HotArticle/HotArticle.vue'
 import ArticleDetail from '../components/Article/ArticleDetail.vue'
+import ArticleCategories from '../components/Article/ArticleCategories.vue'
+import UserArticle from '../components/ArticleManage/UserArticle.vue'
+import ModifyUser from '../components/PersonalCenter/ModifyInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -48,7 +51,33 @@ const routes = [
     children: [
       { path: '/hotArticle', component: HotArticle },
       { path: '/articleDetail/:id', component: ArticleDetail },
-      { path: '/userPublishArticle', component: PublishArticle }
+      {
+        path: '/userPublishArticle',
+        component: PublishArticle,
+        name: 'userPublishArticle'
+      },
+      {
+        path: '/recommendArticle',
+        component: HotArticle,
+        name: 'recommendArticle'
+      },
+      {
+        path: '/articleCategories',
+        component: ArticleCategories
+      },
+      {
+        path: '/userArticle',
+        component: UserArticle
+      },
+      {
+        path: '/userModifyArticle/:id',
+        component: PublishArticle,
+        name: 'userModifyArticle'
+      },
+      {
+        path: '/modifyUser',
+        component: ModifyUser
+      }
     ],
     redirect: '/hotArticle'
   }

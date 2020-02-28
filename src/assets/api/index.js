@@ -85,6 +85,28 @@ const addReplyReq = function(params) {
 const addCommetReq = function(params) {
   return axios.post('/addComment', params)
 }
+const getRecommendReq = function() {
+  return axios.get('/getRecommendArticle')
+}
+const findUserReq = function(id) {
+  return axios.get('/getUser/' + id)
+}
+const getCategoriesArticleReq = function(category, pageNum) {
+  return axios.get('/getCategoryArticle', {
+    params: {
+      category,
+      pageNum
+    }
+  })
+}
+const getUserArticleReq = function(userId, pageNum) {
+  return axios.get('/getUserArticle', {
+    params: {
+      userId,
+      pageNum
+    }
+  })
+}
 export {
   loginReq,
   registerReq,
@@ -104,5 +126,9 @@ export {
   getCommentReq,
   getReplyReq,
   addReplyReq,
-  addCommetReq
+  addCommetReq,
+  getRecommendReq,
+  findUserReq,
+  getCategoriesArticleReq,
+  getUserArticleReq
 }

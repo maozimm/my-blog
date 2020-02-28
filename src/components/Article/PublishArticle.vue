@@ -1,7 +1,7 @@
 <template>
   <div class="publishArticle">
     <!-- 面包屑导航 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb separator-class="el-icon-arrow-right" v-if="!userModify">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>文章管理</el-breadcrumb-item>
       <el-breadcrumb-item>发布文章</el-breadcrumb-item>
@@ -117,6 +117,8 @@ export default {
       },
       // 修改文章标识
       modifyArticle: false,
+      // 用户修改文章标识
+      userModify: false,
       categoryOptions: [],
       stateOptions: [
         { label: '草稿', value: 0 },
@@ -191,8 +193,12 @@ export default {
               this.acrticleForm
             )
             if (data.data.meta === 200) {
-              this.$message.success('修改成功')
-              router.push('/articleList')
+              this.$message.success('保存成功')
+              if (sessionStorage.getItem('role') !== 'normal') {
+                router.push('/articleList')
+              } else {
+                router.push('/userArticle')
+              }
             }
             return false
           }
@@ -219,7 +225,11 @@ export default {
         const data = await addArticleReq(this.acrticleForm)
         if (data.data.meta === 200) {
           this.$message.success('保存成功')
-          router.push('/articleList')
+          if (sessionStorage.getItem('role') !== 'normal') {
+            router.push('/articleList')
+          } else {
+            router.push('/userArticle')
+          }
         }
       } else {
         const data = await modifyArticleReq(
@@ -228,7 +238,11 @@ export default {
         )
         if (data.data.meta === 200) {
           this.$message.success('修改成功')
-          router.push('/articleList')
+          if (sessionStorage.getItem('role') !== 'normal') {
+            router.push('/articleList')
+          } else {
+            router.push('/userArticle')
+          }
         }
       }
     },
@@ -259,6 +273,9 @@ export default {
   },
   async created() {
     // 判断是不是修改文章
+    if (this.$route.name === 'userModifyArticle') {
+      this.userModify = true
+    }
     if (this.$route.params.id) {
       this.modifyArticle = true
       const res = await findArticleReq(this.$route.params.id)
@@ -294,14 +311,15 @@ export default {
     }
   }
 }
-.avatar-uploader .el-upload {
+.avatar-uploader {
+  width: 178px;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
-.el-upload:hover {
+.avatar-uploader:hover {
   border-color: #409eff;
 }
 .avatar-uploader-icon {
