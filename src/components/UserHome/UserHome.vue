@@ -59,7 +59,7 @@
             <span>个人中心</span>
           </template>
           <el-menu-item index="/modifyUser">修改资料</el-menu-item>
-          <el-menu-item index="/userInfo">修改密码</el-menu-item>
+          <el-menu-item index="/modifyPassword">修改密码</el-menu-item>
         </el-submenu>
         <el-submenu index="7">
           <template slot="title">

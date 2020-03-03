@@ -81,7 +81,7 @@
             <el-tag
               v-if="scope.row.isHot === 1"
               type="success"
-              @click="setIsHot"
+              @click="setIsHot(scope.row)"
               >是</el-tag
             >
             <el-tag type="danger" v-else @click="setIsHot(scope.row)"

@@ -107,6 +107,18 @@ const getUserArticleReq = function(userId, pageNum) {
     }
   })
 }
+const checkPasswordReq = function(userId, password) {
+  return axios.post('/checkPassword', {
+    id: userId,
+    password
+  })
+}
+const modifyPasswordReq = function(userId, password) {
+  return axios.post('/modifyPassword', {
+    id: userId,
+    password
+  })
+}
 export {
   loginReq,
   registerReq,
@@ -130,5 +142,7 @@ export {
   getRecommendReq,
   findUserReq,
   getCategoriesArticleReq,
-  getUserArticleReq
+  getUserArticleReq,
+  checkPasswordReq,
+  modifyPasswordReq
 }

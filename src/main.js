@@ -14,6 +14,8 @@ import Likes from './components/Star/Star.vue'
 // 引入评论组件
 import commentItem from './components/Comment/CommentsItem.vue'
 import replyItem from './components/Comment/ReplyItem.vue'
+import SIdentify from './components/Identify/Identify.vue'
+Vue.component('s-identify', SIdentify)
 Vue.component('like', Likes)
 Vue.component('comment-item', commentItem)
 Vue.component('reply-item', replyItem)

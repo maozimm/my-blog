@@ -15,6 +15,7 @@ import ArticleDetail from '../components/Article/ArticleDetail.vue'
 import ArticleCategories from '../components/Article/ArticleCategories.vue'
 import UserArticle from '../components/ArticleManage/UserArticle.vue'
 import ModifyUser from '../components/PersonalCenter/ModifyInfo.vue'
+import ModifyPassword from '../components/PersonalCenter/ModifyPassword.vue'
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,10 @@ const routes = [
       {
         path: '/modifyUser',
         component: ModifyUser
+      },
+      {
+        path: '/modifyPassword',
+        component: ModifyPassword
       }
     ],
     redirect: '/hotArticle'

@@ -118,7 +118,6 @@ export default {
   height: 400px;
   width: 400px;
   margin-left: 200px;
-  /* background-color: #ccc; */
 }
 .avatar-uploader {
   width: 178px;
