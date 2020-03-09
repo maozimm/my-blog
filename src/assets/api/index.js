@@ -119,6 +119,12 @@ const modifyPasswordReq = function(userId, password) {
     password
   })
 }
+const modifyCategory = function(id, title) {
+  return axios.put('/modifyCategory/' + id, title)
+}
+const addCategoryReq = function(params) {
+  return axios.post('/addCategory', params)
+}
 export {
   loginReq,
   registerReq,
@@ -144,5 +150,7 @@ export {
   getCategoriesArticleReq,
   getUserArticleReq,
   checkPasswordReq,
-  modifyPasswordReq
+  modifyPasswordReq,
+  modifyCategory,
+  addCategoryReq
 }

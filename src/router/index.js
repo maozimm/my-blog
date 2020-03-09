@@ -91,5 +91,23 @@ const routes = [
 const router = new VueRouter({
   routes
 })
-
+// 路由拦截
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') return next()
+  if (window.sessionStorage.getItem('userId')) {
+    if (from.path === '/login') {
+      return next()
+    } else if (from.path === '/') {
+      return next()
+    } else {
+      if (to.matched[0].path !== from.matched[0].path) {
+        return next(from.path)
+      } else {
+        return next()
+      }
+    }
+  } else {
+    return next('/login')
+  }
+})
 export default router
